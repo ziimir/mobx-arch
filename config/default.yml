@@ -1,0 +1,4 @@
+build:
+  serverOutput: out/
+  clientOutput: out/assets
+  publicPath: /assets/

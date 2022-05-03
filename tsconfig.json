@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "ESNext",
+      "dom"
+    ]
+  },
+  "include": [
+    "./src",
+    "./services"
+  ]
+}
