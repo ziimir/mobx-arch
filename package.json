@@ -1,5 +1,5 @@
 {
-  "name": "tmp",
+  "name": "mobx-arch",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,7 +7,8 @@
     "build:server": "NODE_ENV=production webpack --config webpack.server.js",
     "build:ssr": "NODE_ENV=production webpack --config webpack.ssr.js",
     "build:client": "NODE_ENV=production webpack --config webpack.client.js",
-    "build": "npm run build:server && npm run build:ssr && npm run build:client"
+    "build": "npm run build:server && npm run build:ssr && npm run build:client",
+    "lint": "tsc --noEmit"
   },
   "author": "ziimir",
   "dependencies": {

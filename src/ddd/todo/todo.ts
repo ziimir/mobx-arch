@@ -1,13 +1,16 @@
 import {observable, action} from 'mobx';
 
-export class TodoItem {
-    id = Date.now();
+import {TodoDTO} from './todo-types';
 
+export class TodoItem {
+    id: string;
     @observable text: string = '';
     @observable isDone: boolean = false;
 
-    constructor(text: string) {
-        this.text = text;
+    constructor(payload: TodoDTO) {
+        this.id = payload.id;
+        this.text = payload.text;
+        this.isDone = Boolean(payload.isDone);
     }
 
     @action

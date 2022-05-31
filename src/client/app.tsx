@@ -1,13 +1,19 @@
 import React, {PureComponent} from 'react';
 
-import {TodoScene} from './scenes/to-do-scene/todo-scene';
+import {TodoListScene} from './scenes/todo-list';
 
 export class App extends PureComponent<{}, {}> {
+    ref = React.createRef();
+
+    componentDidMount() {
+        console.log('=============================+>', this.ref.current);
+    }
+
     render() {
         return (
             <div>
                 Apppppppppp
-                <TodoScene />
+                <TodoListScene ref={this.ref} />
             </div>
         );
     }

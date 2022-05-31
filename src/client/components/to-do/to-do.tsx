@@ -5,6 +5,7 @@ interface Props {
     className?: string;
     text: string;
     isDone: boolean;
+    onTextChange: (text: string) => void;
 }
 
 export const ToDo: FC<Props> = memo((props) => {
