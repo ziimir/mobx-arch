@@ -1,11 +1,11 @@
-import React, {FC, ForwardRefRenderFunction, useContext, useEffect, forwardRef} from 'react';
+import React, {useEffect, forwardRef} from 'react';
 import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import {createCn} from 'bem-react-classname';
 
 import {ToDo} from '../../components/to-do/to-do';
 
-import {SceneProps} from './index';
+import {SceneProps} from './todo-list-controller';
 
 interface Props {
     className?: string;
@@ -14,7 +14,7 @@ interface Props {
 export const TodoListView = observer(forwardRef<HTMLDivElement, Props & SceneProps>((props, ref) => {
     const cn = createCn('todo-scene', props.className);
 
-    const scene = props.scene;
+    const {scene} = props;
 
     useEffect(() => {
         scene.loadData();

@@ -4,8 +4,10 @@ import {TodoDTO} from './todo-types';
 
 export class TodoItem {
     id: string;
-    @observable text: string = '';
-    @observable isDone: boolean = false;
+
+    @observable text = '';
+
+    @observable isDone = false;
 
     constructor(payload: TodoDTO) {
         this.id = payload.id;
@@ -13,13 +15,11 @@ export class TodoItem {
         this.isDone = Boolean(payload.isDone);
     }
 
-    @action
-    toggleIsDone = () => {
-        this.isDone = !this.isDone
-    }
+    @action toggleIsDone = () => {
+        this.isDone = !this.isDone;
+    };
 
-    @action
-    updateText = (text: string) => {
+    @action updateText = (text: string) => {
         this.text = text;
-    }
+    };
 }

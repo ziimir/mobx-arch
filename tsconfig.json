@@ -8,7 +8,6 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "jsx": "react-jsx",
     "lib": [
@@ -17,7 +16,6 @@
     ]
   },
   "include": [
-    "./src",
-    "./services"
+    "./src"
   ]
 }

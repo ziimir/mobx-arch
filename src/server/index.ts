@@ -7,8 +7,10 @@ import expressWinston from 'express-winston';
 
 import mainPageTemplate from './views/main.pug';
 
+/* eslint-disable @typescript-eslint/no-var-requires, import/no-unresolved, import/extensions */
 const {render} = require('out/server.page.js');
 const manifest = require('out/manifest.json');
+/* eslint-enable @typescript-eslint/no-var-requires, import/no-unresolved, import/extensions */
 
 const app = express();
 const port = 3000;
@@ -41,7 +43,7 @@ function getAssets(): AppAssets {
     });
 
     return {js, css};
-};
+}
 
 const assets = getAssets();
 
@@ -50,9 +52,9 @@ app.use(
     express.static(
         path.join(rootDir, config.get('build.clientOutput')),
         {
-            setHeaders: (response, path, stat) => {
+            setHeaders: (response, path) => {
                 if (IS_PRODUCTION && (/\.(js|css)\.gz$/i).test(path)) {
-                    response.set('Content-Encoding', 'gzip')
+                    response.set('Content-Encoding', 'gzip');
                 }
             }
         }
@@ -74,7 +76,7 @@ app.use(expressWinston.logger({
     ]
 }));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.send(mainPageTemplate({
         js: assets.js,
         css: assets.css,

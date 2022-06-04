@@ -1,6 +1,6 @@
-import {action, observable} from 'mobx';
+import {observable} from 'mobx';
 
-import {TodoItem} from '../../ddd/todo/todo';
+import {TodoItem} from '../todo/todo';
 
 import {TodoListDTO} from './todo-list-types';
 

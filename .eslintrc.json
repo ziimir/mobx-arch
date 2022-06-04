@@ -1,0 +1,48 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "airbnb-base",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "rules": {
+    "indent": ["error", 4],
+    "max-len": ["error", {"code": 120}],
+    "no-shadow": "off",
+    "comma-dangle": ["error", "never"],
+    "object-curly-spacing": ["error", "never"],
+    "block-spacing": ["error", "never"],
+    "operator-linebreak": ["error", "before"],
+    "import/extensions": ["error", "ignorePackages", {"js": "never", "jsx": "never", "ts": "never", "tsx": "never"}],
+    "import/prefer-default-export": "off",
+    "import/no-default-export": ["error"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "space-before-function-paren": "off",
+    "@typescript-eslint/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.js"],
+      "env": {
+        "jest": true
+      },
+      "globals": {
+        "testRule": "readonly"
+      }
+    }
+  ]
+}

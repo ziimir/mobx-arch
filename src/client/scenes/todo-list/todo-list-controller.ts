@@ -1,30 +1,31 @@
 import {makeAutoObservable} from 'mobx';
 
 import {rootRepository} from '../../root-repository';
-import {TodoList} from '../../../ddd/todo-list/todo-list';
 
 class TodoListController {
-    private _todoListRepo = rootRepository.todoList;
+    private todoListRepo = rootRepository.todoList;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    get list(){
+    get list() {
         // тут важно ссылаться именно на обзервабл, вот валью - это обзервабл совойсво в ModelContainer
-        return this._todoListRepo.get();
+        return this.todoListRepo.get();
     }
 
     loadData() {
         setTimeout(() => {
-            this._todoListRepo.fetch('00000000', 10)
+            this.todoListRepo.fetch('00000000', 10)
                 .then(() => console.log('2 atempt'));
         }, 2000);
 
-        return this._todoListRepo.fetch('111', 10)
-            .then(() => {console.log('then', this.list)})
-            .then(() => {console.log('then', this.list.list)});
+        return this.todoListRepo.fetch('111', 10)
+            .then(() => {console.log('then', this.list);})
+            .then(() => {console.log('then', this.list.list);});
     }
 }
 
 export const todoListScene = new TodoListController();
+
+export type SceneProps = {scene: typeof todoListScene};
