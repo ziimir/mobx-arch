@@ -24,7 +24,7 @@ dev: clean
 	@# создаем server.js чтобы nodemon мог запуститься
 	@mkdir -p $(dist_dir)
 	@touch $(dist_dir)/server.js
-	npx concurrently --kill-others --names webpack,nodemon --prefix-colors cyan,green \
+	npx concurrently --kill-others --raw \
 		"npx webpack --watch $(webpack_config)" \
 		"npx nodemon --config nodemon.config.json $(dist_dir)/server.js"
 
@@ -33,7 +33,7 @@ debug: clean
 	@# создаем server.js чтобы nodemon мог запуститься
 	@mkdir -p $(dist_dir)
 	@touch $(dist_dir)/server.js
-	npx concurrently --kill-others --names webpack,nodemon --prefix-colors cyan,green \
+	npx concurrently --kill-others --raw \
 		"npx webpack --watch $(webpack_config)" \
 		"npx nodemon --inspect --config nodemon.config.json $(dist_dir)/server.js"
 
@@ -54,4 +54,4 @@ unit-test:
 	npx jest --config jest.config.js
 
 .PHONY: validate
-validate: verify-ts lint-code
+validate: verify-ts lint-code unit-test

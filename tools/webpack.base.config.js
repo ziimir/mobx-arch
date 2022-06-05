@@ -1,7 +1,7 @@
-const {getHashDigest} = require('loader-utils');
+const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const {rootDir, getIconFolders} = require('./utils');
+const {rootDir} = require('./utils');
 
 module.exports = {
     resolve: {
@@ -10,18 +10,12 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
+                test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        presets: [
-                            '@babel/preset-env'
-                        ],
-                        plugins: [
-                            '@babel/plugin-proposal-class-properties',
-                            '@babel/plugin-syntax-dynamic-import'
-                        ]
+                        configFile: path.resolve(rootDir, 'babel.config.js')
                     }
                 }, {
                     loader: 'ts-loader',
