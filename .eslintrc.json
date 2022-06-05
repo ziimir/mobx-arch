@@ -32,7 +32,10 @@
     "import/no-default-export": ["error"],
     "@typescript-eslint/no-explicit-any": "off",
     "space-before-function-paren": "off",
-    "@typescript-eslint/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}]
+    "@typescript-eslint/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+    "func-call-spacing": "off",
+    "no-spaced-func": "off",
+    "@typescript-eslint/func-call-spacing": ["error", "never"]
   },
   "overrides": [
     {

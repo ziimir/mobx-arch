@@ -20,14 +20,12 @@ const serverConfig = {
         libraryTarget: 'commonjs2'
     },
     externals: [
-        // нужно сделать для всех импортящихся модулей из билда
-        {
-            'out/server.page.js':  './server.page',
-            'out/manifest.json':  './manifest.json'
-        },
         nodeExternals()
     ],
     module: {
+        // не парсим модули загруженные через nativeRequire
+        // предпологается это уже побилженные файлы ssr и мапа с ассетами
+        noParse: /native-require/,
         rules: [
             {
                 test: /\.pug/i,

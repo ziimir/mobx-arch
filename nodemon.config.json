@@ -1,0 +1,9 @@
+{
+  "watch": [
+      "out/assets",
+      "out/manifest.json",
+      "out/server.js",
+      "out/server.page.js"
+  ],
+  "env": {"NODE_ENV": "development"}
+}

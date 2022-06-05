@@ -5,12 +5,8 @@ import config from 'config';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
+import nativeRequire from './lib/native-require/native-require';
 import mainPageTemplate from './views/main.pug';
-
-/* eslint-disable @typescript-eslint/no-var-requires, import/no-unresolved, import/extensions */
-const {render} = require('out/server.page.js');
-const manifest = require('out/manifest.json');
-/* eslint-enable @typescript-eslint/no-var-requires, import/no-unresolved, import/extensions */
 
 const app = express();
 const port = 3000;
@@ -25,6 +21,8 @@ interface AppAssets {
 }
 
 function getAssets(): AppAssets {
+    const manifest = nativeRequire<Record<string, any>>(path.join(rootDir, 'out/manifest.json'));
+
     const JS_ASSET_NAME_REGEXP = /\.js$/;
     const CSS_ASSET_NAME_REGEXP = /\.css$/;
     const css: string[] = [];
@@ -44,8 +42,6 @@ function getAssets(): AppAssets {
 
     return {js, css};
 }
-
-const assets = getAssets();
 
 app.use(
     '/assets',
@@ -77,6 +73,9 @@ app.use(expressWinston.logger({
 }));
 
 app.get('/', (req, res) => {
+    const {render} = nativeRequire<{render: () => any}>(path.join(rootDir, 'out/server.page.js'));
+    const assets = getAssets();
+
     res.send(mainPageTemplate({
         js: assets.js,
         css: assets.css,
