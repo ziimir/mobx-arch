@@ -1,11 +1,16 @@
 import {makeAutoObservable} from 'mobx';
 
-import {rootRepository} from '../../root-repository';
+import {RootRepo} from '../../root-repository';
 
-class TodoListController {
-    private todoListRepo = rootRepository.todoList;
+export class TodoListController {
+    private rootRepo;
 
-    constructor() {
+    private todoListRepo;
+
+    constructor(rootRepository: RootRepo) {
+        this.rootRepo = rootRepository;
+        this.todoListRepo = this.rootRepo.todoList;
+
         makeAutoObservable(this);
     }
 
@@ -14,18 +19,12 @@ class TodoListController {
         return this.todoListRepo.get();
     }
 
-    loadData() {
+    asyncIndependentFetchTodoListForDemonstrateReasons() {
         setTimeout(() => {
             this.todoListRepo.fetch('00000000', 10)
                 .then(() => console.log('2 atempt'));
         }, 2000);
-
-        return this.todoListRepo.fetch('111', 10)
-            .then(() => {console.log('then', this.list);})
-            .then(() => {console.log('then', this.list.list);});
     }
 }
 
-export const todoListScene = new TodoListController();
-
-export type SceneProps = {scene: typeof todoListScene};
+export type SceneProps = {scene: InstanceType<typeof TodoListController>};

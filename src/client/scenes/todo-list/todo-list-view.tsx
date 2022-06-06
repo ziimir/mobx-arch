@@ -9,6 +9,7 @@ import {SceneProps} from './todo-list-controller';
 
 interface Props {
     className?: string;
+    someOwnProp?: string;
 }
 
 export const TodoListView = observer(forwardRef<HTMLDivElement, Props & SceneProps>((props, ref) => {
@@ -17,33 +18,27 @@ export const TodoListView = observer(forwardRef<HTMLDivElement, Props & ScenePro
     const {scene} = props;
 
     useEffect(() => {
-        scene.loadData();
+        scene.asyncIndependentFetchTodoListForDemonstrateReasons();
     }, []);
 
     return (
         <div className={cn('ref')} ref={ref}>
-            {
-                scene.list
-                    ? (
-                        <div className={cn()}>
-                            {
-                                scene.list.list
-                                    .map((todo) => {
-                                        const plainTodo = toJS(todo);
+            <div className={cn()}>
+                {
+                    scene.list.list
+                        .map((todo) => {
+                            const plainTodo = toJS(todo);
 
-                                        return (
-                                            <ToDo
-                                                key={plainTodo.id}
-                                                {...plainTodo}
-                                                onTextChange={(text) => todo.updateText(text)}
-                                            />
-                                        );
-                                    })
-                            }
-                        </div>
-                    )
-                    : null
-            }
+                            return (
+                                <ToDo
+                                    key={plainTodo.id}
+                                    {...plainTodo}
+                                    onTextChange={(text) => todo.updateText(text)}
+                                />
+                            );
+                        })
+                }
+            </div>
         </div>
     );
 }));

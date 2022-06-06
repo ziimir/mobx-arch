@@ -9,3 +9,5 @@ export const rootRepository = {
         (xs) => buildTodoList(xs.items)
     )
 };
+
+export type RootRepo = typeof rootRepository;

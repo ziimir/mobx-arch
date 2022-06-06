@@ -1,9 +1,7 @@
 {
   "watch": [
-      "out/assets",
-      "out/manifest.json",
-      "out/server.js",
-      "out/server.page.js"
+      "out/"
   ],
+  "delay": 1000,
   "env": {"NODE_ENV": "development"}
 }
