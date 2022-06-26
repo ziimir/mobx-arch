@@ -1,13 +1,16 @@
 import {createModelRepo} from '../ddd/utils/model-repo';
 
-import {buildTodoList} from '../ddd/todo-list/todo-list';
-import {fetchTodo} from '../ddd/todo-list/todo-provider';
+import {todoListRepo} from '../ddd/models/todo-list';
+import {userRepo} from '../ddd/models/user';
 
-export const rootRepository = {
-    todoList: createModelRepo(
-        fetchTodo,
-        (xs) => buildTodoList(xs.items)
+import {registerTodoAggregation} from '../ddd/aggregation/todo';
+
+export const rootRepo = {
+    userAgg: userRepo,
+    todoListAgg: createModelRepo(
+        registerTodoAggregation({user: userRepo, todoList: todoListRepo}),
+        (todoAggregation) => todoAggregation
     )
 };
 
-export type RootRepo = typeof rootRepository;
+export type RootRepo = typeof rootRepo;

@@ -1,5 +1,5 @@
 import {withScene, OnSceneMount, SceneViewProps} from '../../react-utils/with-scene-hoc';
-import {rootRepository, RootRepo} from '../../root-repository';
+import {rootRepo, RootRepo} from '../../root-repository';
 
 import {TodoListController} from './todo-list-controller';
 import {TodoListView} from './todo-list-view';
@@ -11,14 +11,17 @@ function loadData(rootRepo: RootRepo): OnSceneMount {
         console.log('ownProps', ownProps);
         console.log('=============================');
 
-        return rootRepo.todoList.fetch('2143', 10293470);
+        return Promise.all([
+            rootRepo.userAgg.fetch(),
+            rootRepo.todoListAgg.fetch(111111)
+        ]);
     };
 }
 
 export const TodoListScene = withScene(
     {
-        onMount: loadData(rootRepository),
+        onMount: loadData(rootRepo),
         renderLoader: () => <div>...custom loading...</div>
     },
-    new TodoListController(rootRepository)
+    new TodoListController(rootRepo)
 )(TodoListView);

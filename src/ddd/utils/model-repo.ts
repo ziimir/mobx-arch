@@ -1,32 +1,4 @@
-import {
-    observable,
-    runInAction,
-    makeObservable,
-    action,
-    computed
-} from 'mobx';
-
-class ModelContainer<T> {
-    v: T | undefined = undefined;
-
-    constructor() {
-        makeObservable(this, {
-            v: observable.ref,
-            value: computed,
-            set: action
-        });
-
-        this.v = undefined;
-    }
-
-    get value() {
-        return this.v;
-    }
-
-    set(value: T) {
-        this.v = value;
-    }
-}
+import {observable, runInAction, makeObservable} from 'mobx';
 
 type Awaited<T> = T extends PromiseLike<infer U> ? U : T
 
@@ -39,15 +11,16 @@ export function createModelRepo<Fn extends AnyPromiseFn, Model>(
     type FetchArgs = Parameters<typeof fetchApi>;
     type FetchResult = Awaited<ReturnType<typeof fetchApi>>;
 
-    const model = new ModelContainer<Model>();
+    return makeObservable({
+        model: undefined as Model,
+        fetch: function (...args: FetchArgs) {
+            return fetchApi(...args)
+                .then((data: FetchResult) => build(data))
+                .then((m) => {
+                    runInAction(() => {this.model = m});
 
-    return {
-        get: () => model.value,
-        fetch: (...args: FetchArgs) => fetchApi(...args)
-            .then((data: FetchResult) => build(data))
-            .then((m) => {
-                runInAction(() => {model.set(m);});
-                return m;
-            })
-    };
+                    return m;
+                });
+        }
+    }, {model: observable.ref});
 }

@@ -22,23 +22,22 @@ export const TodoListView = observer(forwardRef<HTMLDivElement, Props & ScenePro
     }, []);
 
     return (
-        <div className={cn('ref')} ref={ref}>
-            <div className={cn()}>
-                {
-                    scene.list.list
-                        .map((todo) => {
-                            const plainTodo = toJS(todo);
+        <div className={cn()} ref={ref}>
+            <div>{`${scene.ownerName}`} Тебе еще вот столько нужно сдеалть:</div>
+            {
+                scene.list
+                    .map((todo) => {
+                        const plainTodo = toJS(todo);
 
-                            return (
-                                <ToDo
-                                    key={plainTodo.id}
-                                    {...plainTodo}
-                                    onTextChange={(text) => todo.updateText(text)}
-                                />
-                            );
-                        })
-                }
-            </div>
+                        return (
+                            <ToDo
+                                key={plainTodo.id}
+                                {...plainTodo}
+                                onTextChange={(text) => todo.updateText(text)}
+                            />
+                        );
+                    })
+            }
         </div>
     );
 }));

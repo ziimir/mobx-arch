@@ -43,6 +43,7 @@ export const LoadGuard: FC<Props> = memo((props) => {
             .catch((error) => {
                 setError(error);
                 setStatus(PageState.ERROR);
+                throw error;
             });
     }, [onMount]);
 

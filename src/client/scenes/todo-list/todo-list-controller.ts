@@ -1,28 +1,30 @@
-import {makeAutoObservable} from 'mobx';
+import {unwrapDeps} from '../../../ddd/utils/unwrap-deps';
+import {todoListRepo} from '../../../ddd/models/todo-list';
 
 import {RootRepo} from '../../root-repository';
 
 export class TodoListController {
-    private rootRepo;
-
-    private todoListRepo;
+    deps;
 
     constructor(rootRepository: RootRepo) {
-        this.rootRepo = rootRepository;
-        this.todoListRepo = this.rootRepo.todoList;
+        this.deps = unwrapDeps({
+            user: rootRepository.userAgg,
+            todoList: rootRepository.todoListAgg
+        });
+    }
 
-        makeAutoObservable(this);
+    get ownerName() {
+        return this.deps.user.login;
     }
 
     get list() {
-        // тут важно ссылаться именно на обзервабл, вот валью - это обзервабл совойсво в ModelContainer
-        return this.todoListRepo.get();
+        return this.deps.todoList.getList;
     }
 
     asyncIndependentFetchTodoListForDemonstrateReasons() {
         setTimeout(() => {
-            this.todoListRepo.fetch('00000000', 10)
-                .then(() => console.log('2 atempt'));
+            todoListRepo.fetch({user: 2, id: 5})
+                .then(() => console.log('2 attempt'));
         }, 2000);
     }
 }
