@@ -80,7 +80,6 @@ app.get('/', (req, res) => {
         js: assets.js,
         css: assets.css,
         title: 'Hey!',
-        message: 'Hello there!',
         reactApp: render()
     }));
 });

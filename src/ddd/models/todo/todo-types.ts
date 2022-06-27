@@ -1,5 +1,5 @@
 export interface TodoDTO {
-    id: string;
+    id: number;
     text: string;
     isDone?: boolean;
 }

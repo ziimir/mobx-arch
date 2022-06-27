@@ -7,13 +7,22 @@ interface GetMeResponse {
 export const fetchMe = () => new Promise<GetMeResponse>((resolve) => {
     setTimeout(
         () => resolve({
-            me: {
-                uid: 1000,
-                login: 'ziimir',
-                firstName: 'Vasiliy',
-                lastName: 'Pupkin'
-            }
+            me: ziimir
         }),
         1500
     );
 });
+
+const ziimir = {
+    uid: 1000,
+    login: 'ziimir',
+    firstName: 'Daniil',
+    lastName: 'Volkov'
+}
+
+const other = {
+    uid: 1001,
+    login: 'other',
+    firstName: 'Oleg',
+    lastName: 'Ozerov'
+}

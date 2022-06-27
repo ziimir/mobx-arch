@@ -1,3 +1,5 @@
+import {Spin} from 'antd';
+
 import {withScene, OnSceneMount, SceneViewProps} from '../../react-utils/with-scene-hoc';
 import {rootRepo, RootRepo} from '../../root-repository';
 
@@ -12,8 +14,8 @@ function loadData(rootRepo: RootRepo): OnSceneMount {
         console.log('=============================');
 
         return Promise.all([
-            rootRepo.userAgg.fetch(),
-            rootRepo.todoListAgg.fetch(111111)
+            rootRepo.userAgg.fetchWithCache(),
+            rootRepo.todoListAgg.fetchWithCache(1)
         ]);
     };
 }
@@ -21,7 +23,7 @@ function loadData(rootRepo: RootRepo): OnSceneMount {
 export const TodoListScene = withScene(
     {
         onMount: loadData(rootRepo),
-        renderLoader: () => <div>...custom loading...</div>
+        renderLoader: () => <Spin style={{margin: '32px auto', display: 'block'}} size="large" />
     },
     new TodoListController(rootRepo)
 )(TodoListView);

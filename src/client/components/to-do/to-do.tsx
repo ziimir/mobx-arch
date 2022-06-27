@@ -1,3 +1,5 @@
+import {Checkbox} from 'antd';
+
 import React, {FC, memo} from 'react';
 import {createCn} from 'bem-react-classname';
 
@@ -13,9 +15,9 @@ export const ToDo: FC<Props> = memo((props) => {
 
     return (
         <div className={cn()}>
-            {props.text}
+            <Checkbox checked={props.isDone} />
             {' '}
-            {props.isDone ? 'готов' : 'не готов'}
+            {props.isDone ? <s>{props.text}</s> : props.text}
         </div>
     );
 });

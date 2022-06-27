@@ -1,4 +1,6 @@
 import React, {useEffect, forwardRef} from 'react';
+import {Divider, List} from 'antd';
+
 import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import {createCn} from 'bem-react-classname';
@@ -23,21 +25,23 @@ export const TodoListView = observer(forwardRef<HTMLDivElement, Props & ScenePro
 
     return (
         <div className={cn()} ref={ref}>
-            <div>{`${scene.ownerName}`} Тебе еще вот столько нужно сдеалть:</div>
-            {
-                scene.list
-                    .map((todo) => {
-                        const plainTodo = toJS(todo);
+            <Divider orientation="left">{`${scene.ownerName}`} тебе еще вот столько нужно сдеалть:</Divider>
+            <List
+                bordered
+                dataSource={scene.list}
+                renderItem={(todo) => {
+                    const plainTodo = toJS(todo);
 
-                        return (
+                    return (
+                        <List.Item>
                             <ToDo
-                                key={plainTodo.id}
                                 {...plainTodo}
                                 onTextChange={(text) => todo.updateText(text)}
                             />
-                        );
-                    })
-            }
+                        </List.Item>
+                    );
+                }}
+            />
         </div>
     );
 }));

@@ -14,7 +14,7 @@ export class TodoListController {
     }
 
     get ownerName() {
-        return this.deps.user.login;
+        return this.deps.user.name;
     }
 
     get list() {
@@ -23,7 +23,7 @@ export class TodoListController {
 
     asyncIndependentFetchTodoListForDemonstrateReasons() {
         setTimeout(() => {
-            todoListRepo.fetch({user: 2, id: 5})
+            todoListRepo.fetch({user: 2, id: 2})
                 .then(() => console.log('2 attempt'));
         }, 2000);
     }

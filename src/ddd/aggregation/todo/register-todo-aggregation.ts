@@ -10,6 +10,6 @@ interface TodoAggregationRepos {
 
 export const registerTodoAggregation = (repos: TodoAggregationRepos) =>
     (todoListId: number) =>
-        repos.user.fetch()
-            .then((user) => repos.todoList.fetch({user: user.uid, id: todoListId}))
+        repos.user.fetchWithCache()
+            .then((user) => repos.todoList.fetchWithCache({user: user.uid, id: todoListId}))
             .then(() => new TodoAggregation(repos.todoList));

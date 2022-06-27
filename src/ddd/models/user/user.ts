@@ -1,4 +1,4 @@
-import {observable} from 'mobx';
+import {observable, computed} from 'mobx';
 
 import {UserDTO} from './user-types';
 
@@ -7,12 +7,19 @@ export class User {
 
     @observable login: string;
 
-    @observable name: string;
+    @observable firstName: string;
+
+    @observable lastName: string;
 
     constructor(user: UserDTO) {
         this.uid = user.uid;
         this.login = user.login;
-        this.name = `${user.firstName} ${user.lastName}`;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+    }
+
+    @computed get name() {
+        return `${this.firstName} ${this.lastName}`;
     }
 }
 

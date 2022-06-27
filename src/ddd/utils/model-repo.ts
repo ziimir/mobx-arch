@@ -21,6 +21,9 @@ export function createModelRepo<Fn extends AnyPromiseFn, Model>(
 
                     return m;
                 });
+        },
+        fetchWithCache: function (...args: FetchArgs) {
+            return this.model ? Promise.resolve(this.model) : this.fetch(...args);
         }
     }, {model: observable.ref});
 }
