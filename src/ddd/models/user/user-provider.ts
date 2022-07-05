@@ -19,10 +19,3 @@ const ziimir = {
     firstName: 'Daniil',
     lastName: 'Volkov'
 }
-
-const other = {
-    uid: 1001,
-    login: 'other',
-    firstName: 'Oleg',
-    lastName: 'Ozerov'
-}

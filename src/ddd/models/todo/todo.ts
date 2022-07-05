@@ -1,25 +1,43 @@
-import {observable, action} from 'mobx';
+import {observable, action, makeObservable} from 'mobx';
 
 import {TodoDTO} from './todo-types';
 
-export class TodoItem {
-    id: string;
+export class Todo {
+    id: number;
 
-    @observable text = '';
+    text: string;
 
-    @observable isDone = false;
+    description: string;
+
+    isDone: boolean;
 
     constructor(payload: TodoDTO) {
         this.id = payload.id;
         this.text = payload.text;
+        this.description = payload.description;
         this.isDone = Boolean(payload.isDone);
+
+        makeObservable(this, {
+            text: observable,
+            description: observable,
+            isDone: observable,
+            toggleIsDone: action,
+            updateText: action,
+            updateDescription: action
+        })
     }
 
-    @action toggleIsDone = () => {
+    toggleIsDone = () => {
         this.isDone = !this.isDone;
     };
 
-    @action updateText = (text: string) => {
+    updateText = (text: string) => {
         this.text = text;
     };
+
+    updateDescription = (text: string) => {
+        this.description = text;
+    }
 }
+
+export const buildTodo = (todo: TodoDTO) => new Todo(todo);

@@ -1,15 +1,14 @@
 import {unwrapDeps} from '../../../ddd/utils/unwrap-deps';
-import {todoListRepo} from '../../../ddd/models/todo-list';
 
 import {RootRepo} from '../../root-repository';
 
 export class TodoListController {
-    deps;
+    private deps;
 
-    constructor(rootRepository: RootRepo) {
+    constructor(rootRepo: RootRepo) {
         this.deps = unwrapDeps({
-            user: rootRepository.userAgg,
-            todoList: rootRepository.todoListAgg
+            user: rootRepo.userAgg,
+            todoList: rootRepo.todoListAgg
         });
     }
 
@@ -21,12 +20,13 @@ export class TodoListController {
         return this.deps.todoList.getList;
     }
 
-    asyncIndependentFetchTodoListForDemonstrateReasons() {
-        setTimeout(() => {
-            todoListRepo.fetch({user: 2, id: 2})
-                .then(() => console.log('2 attempt'));
-        }, 2000);
-    }
+    loadTodo = (id: number) => {
+        return this.deps.todoList.fetchTodoWithCache(id);
+    };
+
+    checkTodo = (id: number) => {
+        return this.deps.todoList.checkTodo(id);
+    };
 }
 
 export type SceneProps = {scene: InstanceType<typeof TodoListController>};

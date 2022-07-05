@@ -9,7 +9,7 @@ export type OnSceneMount = (ownProps: any) => Promise<any>;
 export type SceneViewProps<T extends React.ElementType> = OwnComponentProps<React.ComponentPropsWithRef<T>>;
 
 interface LoadGuardProps {
-    onMount: OnSceneMount;
+    onMount?: OnSceneMount;
     renderLoader?: LoadGuardLoaderRenderer;
     renderError?: LoadGuardErrorRenderer;
 }
@@ -33,7 +33,7 @@ export function withScene<T>(
 
                 return (
                     <LoadGuard
-                        onMount={this.handleLoadGuardMount}
+                        onMount={onMount ? this.handleLoadGuardMount : undefined}
                         renderError={renderError}
                         renderLoader={renderLoader}
                     >

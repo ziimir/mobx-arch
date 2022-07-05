@@ -1,24 +1,32 @@
-import {observable, computed} from 'mobx';
+import {observable, computed, makeObservable} from 'mobx';
 
 import {UserDTO} from './user-types';
 
 export class User {
-    @observable uid: number;
+    uid: number;
 
-    @observable login: string;
+    login: string;
 
-    @observable firstName: string;
+    firstName: string;
 
-    @observable lastName: string;
+    lastName: string;
 
     constructor(user: UserDTO) {
         this.uid = user.uid;
         this.login = user.login;
         this.firstName = user.firstName;
         this.lastName = user.lastName;
+
+        makeObservable(this, {
+            uid: observable,
+            login: observable,
+            firstName: observable,
+            lastName: observable,
+            name: computed
+        })
     }
 
-    @computed get name() {
+    get name() {
         return `${this.firstName} ${this.lastName}`;
     }
 }

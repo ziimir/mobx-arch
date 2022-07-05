@@ -13,7 +13,7 @@ export function unwrapDeps<T extends Record<string, {model: any}>>(repoDeps: T) 
     const depsAnnotations = Object.keys(deps).reduce((depsAnnotations, key) => {
         depsAnnotations[key] = computed;
         return depsAnnotations;
-    }, {});
+    }, {} as Record<string, typeof computed>);
 
     return makeObservable(deps, depsAnnotations);
 }

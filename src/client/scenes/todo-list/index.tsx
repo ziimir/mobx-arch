@@ -15,7 +15,7 @@ function loadData(rootRepo: RootRepo): OnSceneMount {
 
         return Promise.all([
             rootRepo.userAgg.fetchWithCache(),
-            rootRepo.todoListAgg.fetchWithCache(1)
+            rootRepo.todoListAgg.fetchWithCache(1) // типа возьмем из урл параметров
         ]);
     };
 }

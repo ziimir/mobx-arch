@@ -9,7 +9,7 @@ interface GetTodoListResponse {
     items: TodoListDTO;
 }
 
-export const fetchTodo = (data: GetTodoListRequest) => new Promise<GetTodoListResponse>((resolve) => {
+export const fetchTodoList = (data: GetTodoListRequest) => new Promise<GetTodoListResponse>((resolve) => {
     setTimeout(
         () => resolve({items: data.id === 1 ? list1 : list2}),
         300
@@ -19,8 +19,7 @@ export const fetchTodo = (data: GetTodoListRequest) => new Promise<GetTodoListRe
 const list1 = [
     {
         id: 1,
-        text: 'Learn js',
-        isDone: true
+        text: 'Learn js'
     },
     {
         id: 2,
@@ -36,38 +35,27 @@ const list1 = [
     },
     {
         id: 5,
-        text: 'Learn webassembly'
+        text: 'Learn webassembly',
+        isDone: true
     }
 ];
 
 const list2 = [
     {
         id: 6,
-        text: 'Learn about C++\'s history'
-    },
-    {
-        id: 7,
         text: 'Install a C++ compiler',
         isDone: true
     },
     {
+        id: 7,
+        text: 'Learn C++'
+    },
+    {
         id: 8,
-        text: 'Choose a tutorial or two to start learning C++'
+        text: 'Learn pointers'
     },
     {
         id: 9,
-        text: 'Try out each new concept'
-    },
-    {
-        id: 10,
-        text: 'Learn from other developer'
-    },
-    {
-        id: 11,
-        text: 'Work through problems using the concepts you have learned'
-    },
-    {
-        id: 12,
-        text: 'Help others who need help'
+        text: 'Learn embedded C++'
     }
 ];

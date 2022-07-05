@@ -9,7 +9,8 @@ export * from './user-provider';
 
 export const userRepo = createModelRepo(
     fetchMe,
-    (x) => buildUser(x.me)
+    (x) => buildUser(x.me),
+    () => false
 );
 
 export type UserRepo = typeof userRepo;

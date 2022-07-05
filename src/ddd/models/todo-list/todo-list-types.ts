@@ -1,3 +1,7 @@
-import {TodoDTO} from '../todo/todo-types';
+export interface TodoItemDTO {
+    id: number;
+    text: string;
+    isDone?: boolean;
+}
 
-export type TodoListDTO = TodoDTO[];
+export type TodoListDTO = TodoItemDTO[];

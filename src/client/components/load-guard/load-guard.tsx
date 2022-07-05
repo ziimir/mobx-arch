@@ -16,7 +16,7 @@ export type LoadGuardErrorRenderer = <T = any>(error: T) => ReactElement;
 interface Props {
     renderLoader?: LoadGuardLoaderRenderer;
     renderError?: LoadGuardErrorRenderer;
-    onMount: () => Promise<any>;
+    onMount?: () => Promise<any>;
 }
 
 export const LoadGuard: FC<Props> = memo((props) => {
@@ -29,10 +29,14 @@ export const LoadGuard: FC<Props> = memo((props) => {
         children
     } = props;
 
-    const [status, setStatus] = useState(PageState.INITIAL);
+    const [status, setStatus] = useState(onMount ? PageState.INITIAL : PageState.READY);
     const [error, setError] = useState<any>(null);
 
     useEffect(() => {
+        if (!onMount) {
+            return;
+        }
+
         setError(null);
         setStatus(PageState.LOADING);
 

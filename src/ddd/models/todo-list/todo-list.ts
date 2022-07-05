@@ -1,14 +1,43 @@
-import {observable} from 'mobx';
+import {observable, action, makeObservable} from 'mobx';
 
-import {TodoItem} from '../todo/todo';
+import {TodoItemDTO, TodoListDTO} from './todo-list-types';
 
-import {TodoListDTO} from './todo-list-types';
+class TodoItem {
+    id: number;
+
+    text = '';
+
+    isDone = false;
+
+    constructor(payload: TodoItemDTO) {
+        this.id = payload.id;
+        this.text = payload.text;
+        this.isDone = Boolean(payload.isDone);
+
+        makeObservable(this, {
+            text: observable,
+            isDone: observable,
+            toggleIsDone: action,
+            updateText: action
+        });
+    }
+
+    toggleIsDone = () => {
+        this.isDone = !this.isDone;
+    };
+
+    updateText = (text: string) => {
+        this.text = text;
+    };
+}
 
 export class TodoList {
-    @observable.shallow list: TodoItem[] = [];
+    list: TodoItem[] = [];
 
     constructor(todoList: TodoListDTO) {
         this.list = todoList.map((x) => new TodoItem(x));
+
+        makeObservable(this, {list: observable.shallow});
     }
 }
 

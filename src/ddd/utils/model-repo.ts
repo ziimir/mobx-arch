@@ -1,12 +1,11 @@
 import {observable, runInAction, makeObservable} from 'mobx';
 
-type Awaited<T> = T extends PromiseLike<infer U> ? U : T
-
-type AnyPromiseFn = (...args: any[]) => Promise<any>;
+import {Awaited, AnyPromiseFn} from '../../types/common';
 
 export function createModelRepo<Fn extends AnyPromiseFn, Model>(
     fetchApi: Fn,
-    build: (payload: Awaited<ReturnType<typeof fetchApi>>) => Model
+    build: (payload: Awaited<ReturnType<typeof fetchApi>>) => Model,
+    invalidate: (model: Model, ...fetchArgs: Parameters<typeof fetchApi>) => boolean
 ) {
     type FetchArgs = Parameters<typeof fetchApi>;
     type FetchResult = Awaited<ReturnType<typeof fetchApi>>;
@@ -23,7 +22,7 @@ export function createModelRepo<Fn extends AnyPromiseFn, Model>(
                 });
         },
         fetchWithCache: function (...args: FetchArgs) {
-            return this.model ? Promise.resolve(this.model) : this.fetch(...args);
+            return (!this.model || invalidate(this.model, ...args)) ? this.fetch(...args) : Promise.resolve(this.model);
         }
     }, {model: observable.ref});
 }
