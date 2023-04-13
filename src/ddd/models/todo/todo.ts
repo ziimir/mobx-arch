@@ -39,5 +39,3 @@ export class Todo {
         this.description = text;
     }
 }
-
-export const buildTodo = (todo: TodoDTO) => new Todo(todo);

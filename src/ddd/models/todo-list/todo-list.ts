@@ -1,3 +1,4 @@
+import {injectable, inject} from 'inversify';
 import {observable, action, makeObservable} from 'mobx';
 
 import {TodoItemDTO, TodoListDTO} from './todo-list-types';
@@ -31,14 +32,34 @@ class TodoItem {
     };
 }
 
+@injectable()
 export class TodoList {
     list: TodoItem[] = [];
 
-    constructor(todoList: TodoListDTO) {
-        this.list = todoList.map((x) => new TodoItem(x));
+    //constructor(todoList: TodoListDTO = [{id: 9, text: 'sadf'}]) {
+    constructor() {
+        //this.list = todoList.map((x) => new TodoItem(x));
 
-        makeObservable(this, {list: observable.shallow});
+        makeObservable(this, {
+            list: observable.shallow,
+            add: action
+        });
+    }
+
+    public init(todoList: TodoListDTO) {
+        this.list = todoList.map((x) => new TodoItem(x));
+    }
+
+    public add(item: TodoItemDTO) {
+        this.list.push(new TodoItem(item));
     }
 }
 
-export const buildTodoList = (todoList: TodoListDTO) => new TodoList(todoList);
+@injectable()
+export class TodoListFactory {
+    @inject('TodoListConstructor') private TodoList: {new(todoList: TodoListDTO): TodoList};
+
+    public create(todoList: TodoListDTO) {
+        return new this.TodoList(todoList);
+    }
+}

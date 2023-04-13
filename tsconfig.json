@@ -10,7 +10,9 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "jsx": "react-jsx",
+    "types": ["reflect-metadata"],
     "lib": [
       "ESNext",
       "dom"

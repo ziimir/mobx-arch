@@ -30,5 +30,3 @@ export class User {
         return `${this.firstName} ${this.lastName}`;
     }
 }
-
-export const buildUser = (user: UserDTO) => new User(user);
