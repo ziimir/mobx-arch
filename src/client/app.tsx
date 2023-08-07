@@ -1,15 +1,18 @@
 import "reflect-metadata";
-import React, {PureComponent, MouseEvent, useMemo, useState} from 'react';
+import React, {PureComponent, MouseEvent, useMemo, useState, useEffect} from 'react';
 import {Layout, Typography, Button, Row, Col} from 'antd';
 import {Provider, useContainer} from 'inversify-react';
 import {interfaces} from 'inversify';
 import {observer} from 'mobx-react';
+
+import {TstView} from './scenes/tst/tst-view';
 
 import {EmptyObject} from '../types/common';
 
 import {TodoList, TodoListFactory} from "../ddd/models/todo-list/todo-list";
 
 import {container} from './di.config';
+import {Reset} from './reset';
 
 //import {TodoListScene} from './scenes/todo-list';
 
@@ -22,13 +25,20 @@ const TST = observer(({text}) => {
     const todoListFactory = c.get('Factory<TodoList>');
 
     const todoList = useMemo(() => todoListFactory([{id: 99, text}]), [text]);
+    //const todoList = todoListFactory([{id: 99, text}]);
 
     console.log('=============================+>', todoList);
 
-    const todoList2 = c.get(TodoList);
+    const todoList2 = c.get('TodoList');
     console.log('=============================+>', todoList2);
 
     console.log('=============================+>', todoList === todoList2);
+
+    //useEffect(() => {
+        //setTimeout(() => {
+            //todoListFactory([{id: 0, text: 'asdfasdfasdf'}]);
+        //}, 3000)
+    //}, []);
 
     return <>
         <button
@@ -40,7 +50,7 @@ const TST = observer(({text}) => {
         </button>
         <div>{
             todoList2.list.map(({id, text}) => (
-                <div key={id}>{`${id}: ${text}`}</div>
+                <div>{`${id}: ${text}`}</div>
             ))
         }</div>
     </>;
@@ -49,16 +59,24 @@ const TST = observer(({text}) => {
 export class App extends PureComponent<EmptyObject, EmptyObject> {
     ref = React.createRef();
 
-    state = {text: 'sdfsdf'};
+    state = {
+        text: 'sdfsdf'
+        tstPrp: 'own'
+    };
 
     handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         console.log('scene ref', this.ref.current);
     };
 
+    handleTstClick = (event: MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        this.setState({tstPrp: 'outer'});
+    };
+
     handleChangeText = (e) => {
         this.setState({text: e.target.value});
-    }
+    };
 
     render() {
         return (
@@ -77,6 +95,9 @@ export class App extends PureComponent<EmptyObject, EmptyObject> {
                             AAAAAA
                             <input type="text" value={this.state.text} onChange={this.handleChangeText} />
                             <TST text={this.state.text} />
+                            <Reset />
+                            <TstView ownProp={this.state.tstPrp} />
+                            <button onClick={this.handleTstClick}>BBBB</button>
                         </Col>
                     </Row>
                 </Layout.Content>
